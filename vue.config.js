@@ -5,5 +5,8 @@ module.exports = {
         prependData: `@import "@/styles/resources.scss";`
       }
     }
+  },
+  devServer: {
+    port: 3001
   }
 };

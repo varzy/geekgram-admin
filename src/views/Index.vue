@@ -1,20 +1,18 @@
 <template>
   <div class="index">
-    <p class="greeting">hello, world</p>
-    <el-button type="primary">Button</el-button>
+    hello, world
   </div>
 </template>
 
 <script>
 export default {
   name: 'Index'
-}
+};
 </script>
 
 <style lang="scss" scoped>
 .index {
-  .greeting {
-    color: $g-color-primary;
-  }
+  background-color: bisque;
+  height: 2000px;
 }
 </style>
