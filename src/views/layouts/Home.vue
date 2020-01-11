@@ -1,10 +1,6 @@
 <template>
   <div class="home">
     <section class="home-aside">
-      <div :class="['home-aside-logo', { 'home-aside-logo-hidden': isMenuCollapsed } ]">
-        <h1 class="home-aside-logo-inner">Geekgram Admin</h1>
-      </div>
-
       <el-menu
         default-active="2"
         class="home-aside-menu"
@@ -96,17 +92,12 @@ export default {
       height: 72px;
       line-height: 72px;
       text-align: center;
-      transition: 0.3s all ease-in-out;
 
       &-inner {
         margin: 0;
         padding: 0;
         font-size: 20px;
         letter-spacing: 1px;
-      }
-
-      &-hidden {
-        display: none;
       }
     }
 
