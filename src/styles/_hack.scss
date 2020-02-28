@@ -1,0 +1,7 @@
+.h {
+  &-form_item_no_bottom {
+    /deep/ .el-form-item {
+      margin-bottom: 0;
+    }
+  }
+}

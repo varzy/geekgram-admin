@@ -1,7 +1,7 @@
 <template>
   <div class="Post">
     <el-card class="form" shadow="hover">
-      <el-form inline ref="form" :model="form">
+      <el-form class="h-form_item_no_bottom" inline ref="form" :model="form">
         <el-form-item label="标题">
           <el-input placeholder="请输入标题" v-model="form.title"></el-input>
         </el-form-item>
@@ -33,7 +33,14 @@
           <template #default="scope">
             <el-link type="primary" :underline="false" @click="onViewPost(scope)">详情</el-link>
             <el-divider direction="vertical"></el-divider>
-            <el-link type="danger" :underline="false" @click="onDeletePost(scope)">删除</el-link>
+            <el-popover ref="popover" placement="left" width="160" trigger="click">
+              <p>确定删除吗？</p>
+              <div class="g-align-right">
+                <el-link type="primary" :underline="false" style="margin-right: 12px">取消</el-link>
+                <el-button type="primary" size="mini">确定</el-button>
+              </div>
+            </el-popover>
+            <el-link v-popover:popover type="danger" :underline="false">删除</el-link>
           </template>
         </el-table-column>
       </el-table>
