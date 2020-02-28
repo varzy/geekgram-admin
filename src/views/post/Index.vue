@@ -1,11 +1,19 @@
 <template>
   <div class="Post">
-    Post
+    <el-card class="table" shadow="hover">
+      <el-table :data="tableData"></el-table>
+    </el-card>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Post'
+  name: 'Post',
+
+  data() {
+    return {
+      tableData: []
+    }
+  }
 };
 </script>

@@ -7,6 +7,11 @@ module.exports = {
     }
   },
   devServer: {
-    port: 3010
+    port: 3010,
+    proxy: {
+      '/api/': {
+        target: 'http://geekgram.test/api/',
+      }
+    }
   }
 };
