@@ -1,12 +1,12 @@
 <template>
   <div class="Post">
-    <el-card class="panel" shadow="hover">
-      <el-form inline ref="panel" :model="panel">
+    <el-card class="form" shadow="hover">
+      <el-form inline ref="form" :model="form">
         <el-form-item label="标题">
-          <el-input placeholder="请输入标题" v-model="panel.title"></el-input>
+          <el-input placeholder="请输入标题" v-model="form.title"></el-input>
         </el-form-item>
         <el-form-item label="分类">
-          <el-select placeholder="请选择分类" v-model="panel.categoryId">
+          <el-select multiple collapse-tags placeholder="请选择分类" v-model="form.categoryIds">
             <el-option
               v-for="(category, index) in categoryOptions"
               :key="index"
@@ -24,7 +24,7 @@
 
     <el-card class="table g-gap" shadow="hover">
       <el-table :data="tableData" v-loading="isTableLoading">
-        <el-table-column type="index" label="#"></el-table-column>
+        <el-table-column type="index" label="#" :index="onCalcTableIndex"></el-table-column>
         <el-table-column show-overflow-tooltip label="标题" prop="title"></el-table-column>
         <el-table-column label="分类" prop="category.alias"></el-table-column>
         <el-table-column label="楼主" prop="user.name"></el-table-column>
@@ -38,7 +38,14 @@
         </el-table-column>
       </el-table>
 
-      <el-pagination class="g-align-right g-gap"></el-pagination>
+      <el-pagination
+        background
+        class="g-align-right g-gap"
+        layout="prev, pager, next"
+        :total="pager.total"
+        :page-size="pager.size"
+        @current-change="handlePageChanged"
+      ></el-pagination>
     </el-card>
 
     <post-viewer ref="postViewer"></post-viewer>
@@ -59,9 +66,14 @@ export default {
     return {
       tableData: [],
       isTableLoading: false,
-      panel: {
+      form: {
         title: '',
-        categoryId: null
+        categoryIds: []
+      },
+      pager: {
+        total: 0,
+        size: 20,
+        page: 1
       },
       categoryOptions: []
     };
@@ -77,13 +89,18 @@ export default {
       try {
         this.isTableLoading = true;
 
-        const reqParams = { includes: 'category,user,tags' };
+        const reqParams = {
+          includes: 'category,user,tags',
+          page: this.pager.page,
+          size: this.pager.size
+        };
 
-        if (this.panel.title) reqParams.title = this.panel.title;
-        if (this.panel.categoryId) reqParams.category_id = this.panel.categoryId;
+        if (this.form.title) reqParams.title = this.form.title;
+        if (this.form.categoryIds) reqParams.category_ids = this.form.categoryIds;
 
         const { data } = await reqFetchPosts(reqParams);
         this.tableData = data.data;
+        this.pager.total = data.meta.total;
       } finally {
         this.isTableLoading = false;
       }
@@ -92,21 +109,22 @@ export default {
       const { data } = await reqFetchCategories();
       this.categoryOptions = data.data;
     },
-    async onSearch() {
-      try {
-        await this.$refs.panel.validate();
-      } catch {
-        return;
-      }
-
+    onSearch() {
       this.getPosts();
     },
     onResetPanel() {
-      this.panel.title = '';
-      this.panel.categoryId = null;
-      this.$refs.panel.resetFields();
+      this.form.title = '';
+      this.form.categoryIds = [];
+      this.$refs.form.resetFields();
 
       this.getPosts();
+    },
+    handlePageChanged(page) {
+      this.pager.page = page;
+      this.getPosts();
+    },
+    onCalcTableIndex(index) {
+      return (this.pager.page - 1) * this.pager.size + index + 1;
     },
     onViewPost({ row }) {
       this.$refs.postViewer.open({ id: row.id });

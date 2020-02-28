@@ -89,6 +89,7 @@ export default {
   }
 
   &-body {
+    min-width: 0;
     position: relative;
     flex: 1;
     display: flex;
