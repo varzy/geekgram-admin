@@ -10,7 +10,7 @@ module.exports = {
     port: 3010,
     proxy: {
       '/api/': {
-        target: 'http://geekgram.test/api/',
+        target: 'http://geekgram.test/'
       }
     }
   }

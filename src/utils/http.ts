@@ -1,20 +1,20 @@
-import Axios, {AxiosInstance, AxiosPromise, AxiosRequestConfig, AxiosStatic} from 'axios';
-import { Message as ElMessage } from "element-ui";
+import Axios, { AxiosInstance, AxiosPromise, AxiosRequestConfig, AxiosStatic } from 'axios';
+import { Message as ElMessage } from 'element-ui';
 
 interface ICustomAxiosRequestConfig extends AxiosRequestConfig {
   showError: boolean;
   errorMsg: string;
 }
 
-export interface ICustomAxiosInstance extends AxiosInstance {
-  (config: ICustomAxiosRequestConfig): AxiosPromise;
-}
+// export interface ICustomAxiosInstance extends AxiosInstance {
+//   (config: ICustomAxiosRequestConfig): AxiosPromise;
+// }
+//
+// interface ICustomAxiosStatic extends AxiosStatic {
+//   create(config?: ICustomAxiosInstance): AxiosInstance;
+// }
 
-interface ICustomAxiosStatic extends AxiosStatic {
-  create(config?: ICustomAxiosInstance): AxiosInstance;
-}
-
-const instance: ICustomAxiosInstance = Axios.create({
+const instance = Axios.create({
   baseURL: process.env.VUE_APP_BASE_URL_API,
   timeout: 8000,
   headers: {
@@ -23,7 +23,7 @@ const instance: ICustomAxiosInstance = Axios.create({
   }
 });
 
-instance.interceptors.request.use((originalConfig) => {
+instance.interceptors.request.use(originalConfig => {
   const config = originalConfig as ICustomAxiosRequestConfig;
 
   config.showError = config.hasOwnProperty('showError') ? config.showError : true;
