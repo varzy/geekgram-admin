@@ -13,3 +13,9 @@ export const reqShowPost = (id: number, params: any) =>
     method: 'GET',
     params
   });
+
+export const reqDestroyPost = (id: number) =>
+  http({
+    url: `/v1/posts/${id}`,
+    method: 'DELETE'
+  });

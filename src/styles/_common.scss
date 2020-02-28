@@ -1,9 +1,39 @@
-.full {
-  &-width {
-    width: 100%;
+.g {
+  &-full {
+    &-width {
+      width: 100%;
+    }
+
+    &-height {
+      height: 100%;
+    }
   }
 
-  &-height {
-    height: 100%;
+  @each $position in left, center, right {
+    &-align-#{$position} {
+      text-align: $position;
+    }
+  }
+
+  &-gap {
+    $base-gap-size: 12px;
+
+    margin-top: $base-gap-size;
+
+    &-l {
+      margin-top: $base-gap-size + 4px;
+    }
+
+    &-xl {
+      margin-top: $base-gap-size + 8px;
+    }
+
+    &-s {
+      margin-top: $base-gap-size - 4px;
+    }
+
+    &-xs {
+      margin-top: $base-gap-size - 8px;
+    }
   }
 }
