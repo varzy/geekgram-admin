@@ -1,42 +1,31 @@
 <template>
   <div class="home">
-    <section class="home-aside">
-      <el-menu
-        default-active="2"
-        class="home-aside-menu"
-        background-color="#000c17"
-        text-color="#fff"
-        active-text-color="#ffd04b"
-        :collapse="isMenuCollapsed"
-      >
-        <el-submenu index="1">
-          <template slot="title">
-            <i class="el-icon-location"></i>
-            <span>导航一</span>
-          </template>
-          <el-menu-item-group>
-            <template slot="title">分组一</template>
-            <el-menu-item index="1-1">选项1</el-menu-item>
-            <el-menu-item index="1-2">选项2</el-menu-item>
-          </el-menu-item-group>
-          <el-menu-item-group title="分组2">
-            <el-menu-item index="1-3">选项3</el-menu-item>
-          </el-menu-item-group>
-          <el-submenu index="1-4">
-            <template slot="title">选项4</template>
-            <el-menu-item index="1-4-1">选项1</el-menu-item>
-          </el-submenu>
-        </el-submenu>
-        <el-menu-item index="2">
-          <i class="el-icon-menu"></i>
-          <span slot="title">导航二</span>
-        </el-menu-item>
-        <el-menu-item index="4">
-          <i class="el-icon-setting"></i>
-          <span slot="title">导航四</span>
-        </el-menu-item>
-      </el-menu>
-    </section>
+    <el-menu
+      class="home-aside"
+      default-active="2"
+      background-color="#000c17"
+      text-color="#fff"
+      active-text-color="#ffd04b"
+      :collapse="isMenuCollapsed"
+      @select="handleMenuToggled"
+    >
+      <el-menu-item index="DashboardIndex">
+        <i class="el-icon-s-home"></i>
+        <span slot="title">仪表盘</span>
+      </el-menu-item>
+      <el-menu-item index="PostIndex">
+        <i class="el-icon-s-management"></i>
+        <span slot="title">帖子管理</span>
+      </el-menu-item>
+      <el-menu-item index="CategoryIndex">
+        <i class="el-icon-menu"></i>
+        <span slot="title">分类管理</span>
+      </el-menu-item>
+      <el-menu-item index="TagIndex">
+        <i class="el-icon-collection-tag"></i>
+        <span slot="title">标签管理</span>
+      </el-menu-item>
+    </el-menu>
 
     <section class="home-body">
       <header class="home-body-header">
@@ -70,6 +59,12 @@ export default {
     return {
       isMenuCollapsed: false
     };
+  },
+
+  methods: {
+    handleMenuToggled(index) {
+      this.$router.push({ name: index });
+    }
   }
 };
 </script>
@@ -79,36 +74,17 @@ export default {
   height: 100vh;
   overflow: hidden;
   display: flex;
+  background-color: #f0f2f5;
 
   &-aside {
     height: 100%;
-    flex-shrink: 0;
     overflow: auto;
-    background-color: #000c17;
-    color: #fff;
+    flex-shrink: 0;
 
-    &-logo {
-      width: 100%;
-      height: 72px;
-      line-height: 72px;
-      text-align: center;
-
-      &-inner {
-        margin: 0;
-        padding: 0;
-        font-size: 20px;
-        letter-spacing: 1px;
-      }
-    }
-
-    &-menu {
-      border: 0;
-
-      &:not(.el-menu--collapse) {
-        width: 15.6vw;
-        max-width: 256px;
-        min-height: 192px;
-      }
+    &:not(.el-menu--collapse) {
+      width: 15.6vw;
+      max-width: 256px;
+      min-height: 192px;
     }
   }
 
@@ -127,6 +103,7 @@ export default {
       z-index: 500;
       padding-left: 20px;
       padding-right: 20px;
+      background-color: #fff;
       box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
 
       .left {
