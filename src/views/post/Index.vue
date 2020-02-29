@@ -1,6 +1,6 @@
 <template>
   <div class="Post">
-    <el-card class="form" shadow="hover">
+    <el-card class="panel" shadow="hover">
       <el-form class="h-form_item_no_bottom" inline ref="form" :model="form">
         <el-form-item label="标题">
           <el-input placeholder="请输入标题" v-model="form.title"></el-input>
